@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const Product = require('../models/products');
 
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: "Handler GET works to /products"
+        res.status(200).json({
+            message: "Handler GET works to /products"
+        })
     })
-})
-
+    // github post all ok
 router.post('/', (req, res, next) => {
 
     const product = new Product({
