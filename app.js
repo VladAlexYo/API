@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -8,10 +8,10 @@ const productRoutes = require('./API/routes/products');
 const orderRoutes = require('./API/routes/orders');
 
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb+srv://user_1:' + process.env.MONGO_ATLAS_PW + '@cluster0.gaewi.gcp.mongodb.net/Cluster0?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://user_1:user_1@cluster0.gaewi.gcp.mongodb.net/Cluster0?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
