@@ -25,7 +25,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.use('/products', productRoutes);
+app.use('/records', productRoutes);
 app.use('/orders', orderRoutes);
 
 app.use((req, res, next) => {
