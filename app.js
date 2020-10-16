@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
 // const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -12,13 +13,13 @@ mongoose.connect('mongodb+srv://user_1:user_1@cluster0.gaewi.gcp.mongodb.net/Clu
 
 
 // app.use(morgan('dev'));
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    res.header('Acces-Control-Allow-Origin', '*');
-    res.header('Acces-Control-Allow-Header', 'Origin, X-Requsted-Width, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Header', 'Origin, X-Requsted-Width, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
         res.header('Acces-Control-Allow-Method', 'PUT, POST, PATCH, DELETE, GET');
         return res.status(200).json({})

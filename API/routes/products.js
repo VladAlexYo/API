@@ -6,6 +6,8 @@ const Product = require('../models/products');
 
 
 
+
+
 router.get('/', (req, res, next) => {
         Product.find()
             .exec()
@@ -23,15 +25,26 @@ router.get('/', (req, res, next) => {
     })
     // github post all ok
 router.post('/', (req, res, next) => {
-    const d = new Date();
+
+
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         Lat: req.body.Lat,
         Long: req.body.Long,
-        TimeStamp: new Date().toLocaleTimeString(),
-        DateStamp: new Date().toLocaleDateString()
-    })
+        // TimeStamp: new Date().toLocaleTimeString(),
+        // DateStamp: new Date().toLocaleDateString(),
+        type: "Feature",
+        properties: {
+            name: "ceva",
+            temperatura: "4 grade"
+        },
 
+        geometry: {
+            type: "Point",
+            coordinates: [req.body.Lat, req.body.Long]
+        }
+
+    })
 
     product
         .save()
@@ -39,7 +52,9 @@ router.post('/', (req, res, next) => {
             console.log(result);
             res.status(200).json({
                 message: "Handler POST works to /GPS_Records",
-                createdProduct: result
+                createdProduct: result,
+                geoJson: "GeoJSON",
+
             });
         })
         .catch(err => {
@@ -74,14 +89,47 @@ router.patch('/:productID', (req, res, next) => {
 });
 
 
-router.delete('/:productID', (req, res, next) => {
-    const id = req.params.productID;
-    res.status(200).json({
-        message: id + "  was DELETED"
-    })
-    console.log(id);
-});
+router.delete('/:deleteRecord', (req, res, next) => {
+    Product.remove()
+        .exec()
+        .then(
+            res.status(200).json({
+                message: "All data DELETED"
+            })
+        ).catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: 'No valid entry',
+                error: err
+            });
+        });
 
-
+})
 
 module.exports = router;
+
+
+// {
+//     "type": "FeatureCollection",
+//     "features": [{
+//         "type": "Feature",
+//         "properties": {
+//             "name": "ceva",
+//             "temperatura": "4 grade"
+//         },
+//         "geometry": {
+//             "coordinates": [44.22, 29],
+//             "type": "Point"
+//         }
+//     }, {
+//         "type": "Feature",
+//         "properties": {
+//             "name": "ceva",
+//             "temperatura": "4 grade"
+//         },
+//         "geometry": {
+//             "coordinates": [34.22, 29],
+//             "type": "Point"
+//         }
+//     }]
+// }
