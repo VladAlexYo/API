@@ -41,7 +41,7 @@ router.post('/', (req, res, next) => {
 
         geometry: {
             type: "Point",
-            coordinates: [req.body.Lat, req.body.Long]
+            coordinates: [req.body.Long, req.body.Lat]
         }
 
     })

@@ -43,8 +43,8 @@
             // Use the Arcade Date() function to format time field into a human-readable format
 
             const template = {
-                title: "Earthquake Info",
-                content: "Magnitude {mag} {type} hit {place} on {time}",
+                title: "Date inregistrate",
+                content: "Temperatura:",
                 fieldInfos: [{
                     fieldName: "time",
                     format: {
@@ -78,7 +78,7 @@
 
             const geojsonLayer = new GeoJSONLayer({
                 url: url,
-                copyright: "USGS Earthquakes",
+                copyright: "AVA PRIME",
                 popupTemplate: template,
                 renderer: renderer //optional
             });
