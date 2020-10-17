@@ -3,16 +3,18 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
     Lat: {
-        type: [Number]
+        type: [Number],
+        required: true
     },
     Long: {
-        type: [Number]
+        type: [Number],
+        required: true
     },
     // TimeStamp: String,
     // DateStamp: String,
     properties: {
-        name: String,
-        temperatura: String
+        Lat: Number,
+        Long: Number
     },
     type: {
         type: String,
@@ -32,10 +34,6 @@ const productSchema = mongoose.Schema({
 
         }
     }
-
-
-
-
 });
 
 module.exports = mongoose.model('Product', productSchema)

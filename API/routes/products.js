@@ -10,10 +10,15 @@ const Product = require('../models/products');
 
 router.get('/', (req, res, next) => {
         Product.find()
+            .select('_id properties type geometry')
             .exec()
             .then(docs => {
-                console.log(docs);
-                res.status(200).json(docs);
+                response = {
+                    type: 'FeatureCollection',
+                    features: docs
+                }
+
+                res.status(200).json(response)
             })
             .catch(err => {
                 console.log(err);
@@ -35,8 +40,8 @@ router.post('/', (req, res, next) => {
         // DateStamp: new Date().toLocaleDateString(),
         type: "Feature",
         properties: {
-            name: "ceva",
-            temperatura: "4 grade"
+            Lat: req.body.Lat,
+            Long: req.body.Long
         },
 
         geometry: {
@@ -63,7 +68,24 @@ router.post('/', (req, res, next) => {
         });
 })
 
-router.get('/:recordID', (req, res, next) => {
+router.get('/tipPunct/:Feature', (req, res, next) => {
+    const type = req.params.Feature;
+    Product.find({ type: type }).exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: 'No valid entry',
+                error: err
+            });
+        })
+})
+
+
+router.get('/objectID/:recordID', (req, res, next) => {
     const id = req.params.recordID;
     Product.findById(id)
         .exec()
@@ -79,6 +101,18 @@ router.get('/:recordID', (req, res, next) => {
             });
         })
 })
+
+
+
+
+// Product.find({
+//     Lat: 144.176814
+// }, (error, data) => {
+//     if (error) {
+//         console.log(error);
+//     } else { console.log(data) }
+// })
+
 
 router.patch('/:productID', (req, res, next) => {
     const id = req.params.productID;

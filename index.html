@@ -8,7 +8,7 @@
   For more information about the layers-geojson sample, read the original sample description at developers.arcgis.com.
   https://developers.arcgis.com/javascript/latest/sample-code/layers-geojson/index.html
   -->
-    <title>GeoJSONLayer | Sample | ArcGIS API for JavaScript 4.17</title>
+    <title>DataLab_Oceano_Hidro</title>
 
     <style>
         html,
@@ -28,11 +28,12 @@
         require([
             "esri/Map",
             "esri/layers/GeoJSONLayer",
-            "esri/views/MapView"
-        ], function(Map, GeoJSONLayer, MapView) {
+            "esri/views/MapView",
+            "esri/widgets/BasemapGallery"
+        ], function(Map, GeoJSONLayer, MapView, BasemapGallery) {
             // If GeoJSON files are not on the same domain as your website, a CORS enabled server
             // or a proxy is required.
-            const url = "https://api-avaprime.herokuapp.com/records/5f89c0d46bbb2a22e4dc9ef2";
+            const url = "http://localhost:3000/records/";
 
             // Paste the url into a browser's address bar to download and view the attributes
             // in the GeoJSON file. These attributes include:
@@ -44,36 +45,19 @@
 
             const template = {
                 title: "Date inregistrate",
-                content: "Temperatura:",
-                fieldInfos: [{
-                    fieldName: "time",
-                    format: {
-                        dateFormat: "short-date-short-time"
-                    }
-                }]
+                content: "Senzor: {_id} // Coordonate GPS: Latitudine {Lat} ,  Longitudine {Long} "
+
             };
 
             const renderer = {
                 type: "simple",
-                field: "mag",
                 symbol: {
                     type: "simple-marker",
-                    color: "orange",
+                    color: "#2765d9",
                     outline: {
                         color: "white"
                     }
-                },
-                visualVariables: [{
-                    type: "size",
-                    field: "mag",
-                    stops: [{
-                        value: 2.5,
-                        size: "4px"
-                    }, {
-                        value: 8,
-                        size: "40px"
-                    }]
-                }]
+                }
             };
 
             const geojsonLayer = new GeoJSONLayer({
@@ -90,16 +74,28 @@
 
             const view = new MapView({
                 container: "viewDiv",
-                center: [-168, 46],
-                zoom: 2,
+                center: [28.70, 44.18],
+                zoom: 8,
                 map: map
             });
+
+            // const basemapGallery = new BasemapGallery({
+            //     view: view,
+            //     container: "basemapGalleryDiv"
+            // });
+
+            // // Add the widget to the top-right corner of the view
+            // view.ui.add(basemapGallery, {
+            //     position: "top-right"
+            // });
         });
     </script>
 </head>
 
 <body>
     <div id="viewDiv"></div>
+    <div id="basemapGalleryDiv"></div>
+
 </body>
 
 </html>
