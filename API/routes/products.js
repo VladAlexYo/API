@@ -127,7 +127,7 @@ router.patch('/:productID', (req, res, next) => {
             },
             geometry: {
                 coordinates: [
-                    Lat, Long
+                    Long, Lat
                 ]
             }
         })
