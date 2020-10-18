@@ -116,10 +116,37 @@ router.get('/objectID/:recordID', (req, res, next) => {
 
 router.patch('/:productID', (req, res, next) => {
     const id = req.params.productID;
-    res.status(200).json({
-        message: id + " was UPDATED"
-    })
-    console.log(id);
+    const Lat = req.body.Lat;
+    const Long = req.body.Long;
+    Product.update({ _id: id }, {
+            Lat: Lat,
+            Long: Long,
+            properties: {
+                Lat: Lat,
+                Long: Long
+            },
+            geometry: {
+                coordinates: [
+                    Lat, Long
+                ]
+            }
+        })
+        .exec()
+        .then(doc => {
+            response = {
+                Message: 'Data for' + id + 'valid update ',
+
+            }
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: 'No valid entry',
+                error: err
+            });
+        })
+
 });
 
 
